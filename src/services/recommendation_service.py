@@ -2,7 +2,8 @@ import pandas as pd
 import joblib
 
 # Load model and movie data
-model = joblib.load("backend/src/services/recommender_model.pkl")
+#model = joblib.load("backend/src/services/recommender_model.pkl")
+model = None
 movies = pd.read_csv("data/movies.csv")
 
 def recommend_movies(user_id, num_recs=5):
