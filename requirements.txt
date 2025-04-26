@@ -1,0 +1,7 @@
+flask
+pandas
+scikit-learn
+scikit-surprise
+joblib
+tqdm
+flask-cors
