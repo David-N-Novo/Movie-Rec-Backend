@@ -1,10 +1,20 @@
 import pandas as pd
+import requests
 import joblib
 
 # Load model and movie data
-#model = joblib.load("backend/src/services/recommender_model.pkl")
-model = None
+MODEL_URL = "https://huggingface.co/DavidNNovo/Movie-Recomender/resolve/main/recommender_model.pkl"
+MODEL_PATH = "recommender_model.pkl"
 movies = pd.read_csv("data/movies.csv")
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading ML model...")
+    response = requests.get(MODEL_URL)
+    with open(MODEL_PATH, "wb") as f:
+        f.write(response.content)
+    print("Download complete!")
+
+model = joblib.load(MODEL_PATH)
 
 def recommend_movies(user_id, num_recs=5):
     movie_ids = movies['movieId'].tolist()
