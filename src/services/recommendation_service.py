@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import joblib
+import os
 
 # Load model and movie data
 MODEL_URL = "https://huggingface.co/DavidNNovo/Movie-Recomender/resolve/main/recommender_model.pkl"
