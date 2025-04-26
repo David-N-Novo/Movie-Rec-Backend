@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from services.recommendation_service import recommend_movies
+from src.services.recommendation_service import recommend_movies
 import pandas as pd
 
 recommendation_bp = Blueprint('recommendation', __name__)
