@@ -6,7 +6,7 @@ import pickle
 from pathlib import Path
 
 DATA_DIR = Path("data")
-MODEL_DIR = Path("backend/models")
+MODEL_DIR = Path("backend/src/models")
 MODEL_DIR.mkdir(exist_ok=True, parents=True)
 
 def load_data():

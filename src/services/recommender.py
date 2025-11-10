@@ -4,7 +4,7 @@ import pickle
 from pathlib import Path
 from sklearn.metrics.pairwise import cosine_similarity
 
-MODEL_DIR = Path("backend/models")
+MODEL_DIR = Path("backend/src/models")
 
 class MovieRecommender:
     def __init__(self):
