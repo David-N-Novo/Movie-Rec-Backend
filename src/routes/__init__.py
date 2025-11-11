@@ -1,7 +1,6 @@
 import os
 import requests
 from flask import Blueprint, request, jsonify
-#from src.services.recommendation_service import recommend_movies REPLACE
 from src.services.recommender import MovieRecommender
 
 recommendation_bp = Blueprint('recommendation', __name__)

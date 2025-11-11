@@ -8,27 +8,24 @@ MODEL_DIR = Path("src/models")
 
 class MovieRecommender:
     def __init__(self):
-        # Load the movie embedding matrix we saved (movie_factors)
         self.item_factors = np.load(MODEL_DIR / "als_item_factors.npy")
 
-        # Load mappings
         with open(MODEL_DIR / "movie_mappings.pkl", "rb") as f:
             mappings = pickle.load(f)
 
         # movieId -> index (0..N-1)
         self.movieId_to_index = mappings["movieId_to_index"]
 
-        # index -> movieId (saved as numpy array or list)
+        # index -> movieId 
         self.index_to_movieId = np.array(mappings["index_to_movieId"], dtype=np.int64)
 
-        # Sanity check: rows of item_factors must match number of movies
+        # rows of item_factors must match number of movies
         num_items = self.item_factors.shape[0]
         assert num_items == self.index_to_movieId.shape[0], (
             f"item_factors has {num_items} rows but index_to_movieId has "
             f"{self.index_to_movieId.shape[0]} entries"
         )
 
-        # Load movie metadata (movieId, title, genres)
         self.movies_df = pd.read_csv(MODEL_DIR / "movies_metadata.csv")
 
     def _movie_ids_to_indices(self, movie_ids):

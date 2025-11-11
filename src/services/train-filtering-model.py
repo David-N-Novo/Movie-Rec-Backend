@@ -49,7 +49,6 @@ def build_user_item_matrix(
     """
     interactions = ratings[ratings["rating"] >= 4.0].copy()
 
-    # Map to compressed indices
     user_idx_s = interactions["userId"].map(userId_to_index)
     item_idx_s = interactions["movieId"].map(movieId_to_index)
 
@@ -65,7 +64,6 @@ def build_user_item_matrix(
     num_users = len(userId_to_index)
     num_items = len(movieId_to_index)
 
-    # EXTRA sanity checks
     print("num_users (mapping):", num_users)
     print("num_items (mapping):", num_items)
     print("max user index in interactions:", user_indices.max())
@@ -110,8 +108,8 @@ def save_artifacts(model, movieId_to_index, index_to_movieId, movies_df):
     print(f"len(movieId_to_index): {len(movieId_to_index)}")
     print(f"len(index_to_movieId): {len(index_to_movieId)}")
 
-    # Decide which factor matrix actually corresponds to MOVIES.
-    # We know movies == len(index_to_movieId).
+    # Decides which factor matrix actually corresponds to MOVIES.
+    # know movies == len(index_to_movieId).
     if item_factors.shape[0] == len(index_to_movieId):
         print("Using item_factors as movie embeddings")
         movie_factors = item_factors
@@ -124,15 +122,12 @@ def save_artifacts(model, movieId_to_index, index_to_movieId, movies_df):
             f"({user_factors.shape[0]}) match number of movies ({len(index_to_movieId)})"
         )
 
-    # Final sanity check
     assert movie_factors.shape[0] == len(index_to_movieId), (
         "movie_factors rows != number of movies in mapping!"
     )
 
-    # Save the MOVIE factor matrix
     np.save(MODEL_DIR / "als_item_factors.npy", movie_factors)
 
-    # Save mappings
     with open(MODEL_DIR / "movie_mappings.pkl", "wb") as f:
         pickle.dump(
             {
@@ -142,7 +137,6 @@ def save_artifacts(model, movieId_to_index, index_to_movieId, movies_df):
             f,
         )
 
-    # Save movie metadata
     movies_df.to_csv(MODEL_DIR / "movies_metadata.csv", index=False)
 
 
