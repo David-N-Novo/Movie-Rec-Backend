@@ -59,12 +59,6 @@ def get_recommendations():
 
 @recommendation_bp.route('/movies', methods=['GET'])
 def get_movies():
-    movies = [
-        {
-            "movieId": int(row.movieId),
-            "title": row.title,
-            "genres": row.genres,
-        }
-        for _, row in recommender.movies_df.iterrows()
-    ]
+    df = recommender.movies_df[["movieId", "title", "genres"]]
+    movies = df.to_dict(orient="records")
     return jsonify(movies)
